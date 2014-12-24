@@ -19,4 +19,4 @@ MacOS/Linux/*nix
 
 # Known problems
 * Propresenter for Windows does not support UTF-8 correctly which makes international characters to be shown incorrectly, e.g. Swedish characters ÅÄÖ are shown as ???.
-* Starting on secondary screen does is not correctly implemented
+* Starting on secondary screen is not correctly implemented
