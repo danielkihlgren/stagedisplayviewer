@@ -1,4 +1,4 @@
-stagedisplayviewer
+# Stage Display Viewer
 ==================
 
 Stage display viewer in java for propresenter
@@ -7,16 +7,22 @@ The output text is shown in a lower key fashion, i.e. it's shown in the lower pa
 It should work in Windows/MacOS/Linux and other *nix systems
 
 # Usage
+Propresenter must be running when running stage display viewer.
+
 Either just double click the jar file or, if your OS is not configured for starting jar files, start program as following:
 
 Windows:
 
-run.bat
+    run.bat
 
 MacOS/Linux/*nix
 
-./run.sh
+    ./run.sh
+
+# [Releases](https://github.com/danielkihlgren/stagedisplayviewer/releases)
+[v1.0.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.0.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.0.0/StageDisplayViewer.zip)
+First release
 
 # Known problems
 * Propresenter for Windows does not support UTF-8 correctly which makes international characters to be shown incorrectly, e.g. Swedish characters ÅÄÖ are shown as ???.
-* Starting on secondary screen is not correctly implemented
+* [Starting on secondary screen is not correctly implemented](https://github.com/danielkihlgren/stagedisplayviewer/issues/1)
