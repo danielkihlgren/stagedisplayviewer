@@ -1,4 +1,4 @@
-# Stage Display Viewer
+Stage Display Viewer
 ==================
 
 Stage display viewer in java for propresenter
