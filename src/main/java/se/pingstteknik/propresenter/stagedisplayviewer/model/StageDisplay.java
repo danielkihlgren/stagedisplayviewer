@@ -25,7 +25,8 @@ public class StageDisplay {
     }
 
     public String getData(String fieldIdentifier) {
-        return getField(fieldIdentifier).getData();
+        Field field = getField(fieldIdentifier);
+        return field == null ? "" : field.getData();
     }
 
     public static class Builder {
