@@ -1,7 +1,8 @@
 Stage Display Viewer
 ==================
 
-Stage display viewer in java for propresenter
+Stage display viewer in java for propresenter.
+
 The output text is shown in a lower key fashion, i.e. it's shown in the lower part of the screen. It also compactifies rows by removing every second line break, i.e. 4 rows will be shown as 2 rows.
 
 It should work in Windows/MacOS/Linux and other *nix systems
@@ -19,10 +20,37 @@ MacOS/Linux/*nix
 
     ./run.sh
 
+## Transform text
+Text transform support: compactify rows by removing every second line break, i.e. 4 rows will be shown as 2 rows.
+Active module in properies file config.properties
+
+    TEXT_TRANSLATOR_ACTIVE = true
+   
+
+## Midi module
+Midi module makes it possible to send midi commands from propresenter.
+
+Activate midi module in properties file config.properties
+
+    MIDI = true
+    
+In propresenter on a slide that should send a midi command should add commands like this to Stage Display Notes:
+
+    Midi 0 60 92
+
+Where
+
+    Midi channel note velocity
+
+The 0 indicates the channel, 60 indicates the note Middle C and the 92 is an arbitrary key-down velocity value
+
 # [Releases](https://github.com/danielkihlgren/stagedisplayviewer/releases)
+[v1.1.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.1.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.1.0/StageDisplayViewer.zip)
+Add midi module support. This makes it possible to send midi command from propresenter.
+
 [v1.0.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.0.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.0.0/StageDisplayViewer.zip)
-First release
+First release.
 
 # Known problems
-* Propresenter for Windows does not support UTF-8 correctly which makes international characters to be shown incorrectly, e.g. Swedish characters ÅÄÖ are shown as ???.
+* Propresenter 5 for Windows does not support UTF-8 correctly which makes international characters to be shown incorrectly, e.g. Swedish characters ÅÄÖ are shown as ???.
 * [Starting on secondary screen is not correctly implemented](https://github.com/danielkihlgren/stagedisplayviewer/issues/1)

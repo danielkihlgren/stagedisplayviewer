@@ -11,6 +11,7 @@ import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
 import se.pingstteknik.propresenter.stagedisplayviewer.eventhandler.SceneKeyTypedHandler;
 import se.pingstteknik.propresenter.stagedisplayviewer.runner.LowerKeyHandler;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.FxUtils;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.MidiModule;
 
 import java.io.IOException;
 
@@ -19,7 +20,8 @@ public class Main extends Application {
     private static final String PROGRAM_TITLE = "Stage display Lower Key viewer";
     private static LowerKeyHandler lowerKeyHandler;
     private static Thread thread;
-    
+    private MidiModule midiModule;
+
     public static void main(String[] args) throws IOException {
         launch(args);
     }
@@ -31,7 +33,8 @@ public class Main extends Application {
         Property.loadProperties();
 
         Text lowerKey = fxUtils.createLowerKey();
-        lowerKeyHandler = new LowerKeyHandler(lowerKey);
+        midiModule = new MidiModule();
+        lowerKeyHandler = new LowerKeyHandler(lowerKey, midiModule);
         thread = new Thread(lowerKeyHandler);
 
         primaryStage.setTitle(PROGRAM_TITLE);
@@ -49,6 +52,7 @@ public class Main extends Application {
         return new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 System.out.println("Closing program");
+                midiModule.terminate();
                 lowerKeyHandler.terminate(thread);
                 closeApp();
             }

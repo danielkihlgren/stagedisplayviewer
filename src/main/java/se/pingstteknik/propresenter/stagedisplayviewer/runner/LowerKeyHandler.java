@@ -3,10 +3,7 @@ package se.pingstteknik.propresenter.stagedisplayviewer.runner;
 import javafx.scene.text.Text;
 import se.pingstteknik.propresenter.stagedisplayviewer.Main;
 import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.FxTextUtils;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.XmlDataReader;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.TextTranslator;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.XmlParser;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +15,11 @@ import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.HO
 import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.PORT;
 import static se.pingstteknik.propresenter.stagedisplayviewer.util.ThreadUtil.sleep;
 
+/**
+ * @author Daniel Kihlgren
+ * @version 1.1.0
+ * @since 1.0.0
+ */
 public class LowerKeyHandler implements Runnable {
 
     private static final TextTranslator textTranslator = new TextTranslator();
@@ -27,9 +29,11 @@ public class LowerKeyHandler implements Runnable {
 
     private volatile boolean running = true;
     private final Text lowerKey;
+    private final MidiModule midiModule;
 
-    public LowerKeyHandler(Text lowerKey) throws IOException {
+    public LowerKeyHandler(Text lowerKey, MidiModule midiModule) throws IOException {
         this.lowerKey = lowerKey;
+        this.midiModule = midiModule;
     }
 
     @Override
@@ -44,7 +48,7 @@ public class LowerKeyHandler implements Runnable {
 
                 while (running && socket.isConnected()) {
                     if (in.ready()) {
-                        updateLowerKey(in);
+                        update(in);
                     }
                     sleep();
                 }
@@ -60,12 +64,14 @@ public class LowerKeyHandler implements Runnable {
         thread.run();
     }
 
-    private void updateLowerKey(BufferedReader in) throws IOException {
+    private void update(BufferedReader in) throws IOException {
         String sceneRawData = xmlDataReader.readXmlData(in);
         String parsedText = xmlParser.parse(sceneRawData).getData("CurrentSlide");
+        String slideNotes = xmlParser.parse(sceneRawData).getData("CurrentSlideNotes");
 
         System.out.println("RAW XML:     " + sceneRawData);
         System.out.println("Parsed text: " + parsedText);
+        System.out.println("Slide notes: " + slideNotes);
         lowerKey.setText(" ");
 
         if (!parsedText.isEmpty()) {
@@ -75,6 +81,7 @@ public class LowerKeyHandler implements Runnable {
             lowerKey.setText(currentSlideText);
             System.out.println("Processed text:\n" + currentSlideText);
         }
+        midiModule.handleMessage(slideNotes);
     }
 
     private String getLoginString() {

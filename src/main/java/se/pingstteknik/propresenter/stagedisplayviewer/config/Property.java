@@ -6,6 +6,11 @@ import java.util.Properties;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * @author Daniel Kihlgren
+ * @version 1.1.0
+ * @since 1.0.0
+ */
 public enum Property {
     HOST("localhost"),
     PORT("45678"),
@@ -17,7 +22,8 @@ public enum Property {
     MAX_FONT_SIZE("60"),
     RESPONSE_TIME_MILLIS("50"),
     OUTPUT_WIDTH_PERCENTAGE("90"),
-    TEXT_TRANSLATOR_ACTIVE("true");
+    TEXT_TRANSLATOR_ACTIVE("true"),
+    MIDI("false");
 
     private static final Properties properties = new Properties();
     private static final String PROPERTIES_FILE_NAME = "config.properties";
