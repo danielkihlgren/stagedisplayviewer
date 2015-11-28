@@ -32,4 +32,10 @@
             <outputDirectory>/</outputDirectory>
         </file>
     </files>
+    <!--<fileSets>-->
+        <!--<fileSet>-->
+            <!--<directory>${project.build.directory}/jfx/app/lib</directory>-->
+            <!--<outputDirectory>/lib</outputDirectory>-->
+        <!--</fileSet>-->
+    <!--</fileSets>-->
 </assembly>

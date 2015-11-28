@@ -6,12 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
 import se.pingstteknik.propresenter.stagedisplayviewer.eventhandler.SceneKeyTypedHandler;
 import se.pingstteknik.propresenter.stagedisplayviewer.runner.LowerKeyHandler;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.FxUtils;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.MidiModule;
 
 import java.io.IOException;

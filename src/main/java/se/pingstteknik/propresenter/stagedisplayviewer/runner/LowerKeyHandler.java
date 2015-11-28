@@ -2,8 +2,6 @@ package se.pingstteknik.propresenter.stagedisplayviewer.runner;
 
 import javafx.application.Platform;
 import javafx.scene.text.Text;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
 import se.pingstteknik.propresenter.stagedisplayviewer.model.StageDisplay;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.*;

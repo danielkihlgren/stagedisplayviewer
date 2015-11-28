@@ -1,7 +1,5 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
 
 import javax.sound.midi.*;
@@ -26,7 +24,7 @@ public class MidiModule {
                 tempReceiver = MidiSystem.getReceiver();
                 log.info("Midi module loaded");
             } catch (MidiUnavailableException e) {
-                log.error("Midi module failed to load", e);
+                log.error("Midi module failed to load {}", e);
             }
         }
         receiver = tempReceiver;
@@ -40,7 +38,7 @@ public class MidiModule {
                 receiver.send(shortMessage, -1);
                 log.debug("Midi message sent: {}", message);
             } catch (InvalidMidiDataException e) {
-                log.warn("Midi message failed: {}", message, e);
+                log.warn("Midi message failed: {} {}", message, e);
             }
         }
         lastMessage = message;

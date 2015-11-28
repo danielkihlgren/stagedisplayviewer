@@ -1,7 +1,7 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;

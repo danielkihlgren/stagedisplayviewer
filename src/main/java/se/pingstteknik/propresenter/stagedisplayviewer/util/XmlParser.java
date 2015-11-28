@@ -1,7 +1,5 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -38,7 +36,7 @@ public class XmlParser {
             }
             return builder.build();
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            log.warn("Parse error", e);
+            log.warn("Parse error {}", e);
         }
 
         return null;
