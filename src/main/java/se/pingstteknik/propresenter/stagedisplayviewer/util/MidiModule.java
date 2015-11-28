@@ -7,7 +7,7 @@ import javax.sound.midi.*;
 /**
  * Midi module to support midi commands to be extracted from propresenter slides
  * @author Daniel Kihlgren
- * @version 1.1.0
+ * @version 1.1.1
  * @since 1.1.0
  */
 public class MidiModule {
@@ -30,7 +30,7 @@ public class MidiModule {
 
     public void handleMessage(String message) {
         if (receiver !=null && message.matches("Midi \\d* \\d* \\d*") && !message.equals(lastMessage)) {
-            lastMessage = message;
+
             String[] split = message.split(" ");
             try {
                 ShortMessage shortMessage = new ShortMessage(ShortMessage.NOTE_ON, Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]));
@@ -39,6 +39,7 @@ public class MidiModule {
                 e.printStackTrace();
             }
         }
+        lastMessage = message;
     }
 
     public void terminate() {
