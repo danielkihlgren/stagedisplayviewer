@@ -1,6 +1,5 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.util;
 
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.TEXT_TRANSLATOR_ACTIVE;
 import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.DIVIDER;
 
 public class TextTranslator {
@@ -8,9 +7,7 @@ public class TextTranslator {
     private static final String NEWLINE = "\n";
 
     public String transformSceneText(String currentSlideText) {
-        return TEXT_TRANSLATOR_ACTIVE.isTrue()
-                ? reconstructTextFromRows(splitString(currentSlideText))
-                : currentSlideText;
+        return reconstructTextFromRows(splitString(currentSlideText));
     }
 
     private String[] splitString(String currentSlideText) {

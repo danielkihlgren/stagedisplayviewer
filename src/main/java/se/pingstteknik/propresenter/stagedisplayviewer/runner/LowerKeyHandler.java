@@ -11,18 +11,18 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.HOST;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.PORT;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.*;
 import static se.pingstteknik.propresenter.stagedisplayviewer.util.ThreadUtil.sleep;
 
 /**
  * @author Daniel Kihlgren
- * @version 1.1.0
+ * @version 1.2.0
  * @since 1.0.0
  */
 public class LowerKeyHandler implements Runnable {
 
     private static final TextTranslator textTranslator = new TextTranslator();
+    private static final RemoveLinesAfterEmptyLineTranslator removeLinesAfterEmptyLineTranslator = new RemoveLinesAfterEmptyLineTranslator();
     private static final FxTextUtils  fxTextUtils = new FxTextUtils();
     private static final XmlDataReader xmlDataReader = new XmlDataReader();
     private static final XmlParser xmlParser = new XmlParser();
@@ -75,8 +75,10 @@ public class LowerKeyHandler implements Runnable {
         lowerKey.setText(" ");
 
         if (!parsedText.isEmpty()) {
-            String currentSlideText = textTranslator.transformSceneText(parsedText);
-
+            String currentSlideText = REMOVE_LINES_AFTER_EMPTY_LINE.isTrue()
+                    ? removeLinesAfterEmptyLineTranslator.transform(parsedText) : parsedText;
+            currentSlideText = TEXT_TRANSLATOR_ACTIVE.isTrue()
+                    ? textTranslator.transformSceneText(currentSlideText) : currentSlideText;
             lowerKey.setFont(fxTextUtils.getOptimizedFont(currentSlideText, lowerKey.getWrappingWidth()));
             lowerKey.setText(currentSlideText);
             System.out.println("Processed text:\n" + currentSlideText);

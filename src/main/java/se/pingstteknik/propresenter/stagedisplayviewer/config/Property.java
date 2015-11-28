@@ -23,7 +23,8 @@ public enum Property {
     RESPONSE_TIME_MILLIS("50"),
     OUTPUT_WIDTH_PERCENTAGE("90"),
     TEXT_TRANSLATOR_ACTIVE("true"),
-    MIDI("false");
+    MIDI("false"),
+    REMOVE_LINES_AFTER_EMPTY_LINE("false");
 
     private static final Properties properties = new Properties();
     private static final String PROPERTIES_FILE_NAME = "config.properties";
