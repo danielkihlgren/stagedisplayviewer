@@ -1,5 +1,8 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -8,7 +11,7 @@ import static java.lang.Integer.parseInt;
 
 /**
  * @author Daniel Kihlgren
- * @version 1.1.0
+ * @version 1.2.0
  * @since 1.0.0
  */
 public enum Property {
@@ -26,12 +29,13 @@ public enum Property {
     MIDI("false"),
     REMOVE_LINES_AFTER_EMPTY_LINE("false");
 
+    private static final Logger log = LoggerFactory.getLogger(Property.class);
     private static final Properties properties = new Properties();
     private static final String PROPERTIES_FILE_NAME = "config.properties";
 
     private final String defaultValue;
 
-    private Property(String s) {
+    Property(String s) {
         defaultValue = s;
     }
 
@@ -51,7 +55,7 @@ public enum Property {
         try (FileInputStream file = new FileInputStream(PROPERTIES_FILE_NAME)) {
             properties.load(file);
         } catch (IOException e) {
-            System.out.println("Property file: not found, using default values.");
+            log.warn("Properties file not found, using default values");
         }
     }
 }

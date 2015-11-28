@@ -1,8 +1,11 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.runner;
 
+import javafx.application.Platform;
 import javafx.scene.text.Text;
-import se.pingstteknik.propresenter.stagedisplayviewer.Main;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
+import se.pingstteknik.propresenter.stagedisplayviewer.model.StageDisplay;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.*;
 
 import java.io.BufferedReader;
@@ -21,11 +24,13 @@ import static se.pingstteknik.propresenter.stagedisplayviewer.util.ThreadUtil.sl
  */
 public class LowerKeyHandler implements Runnable {
 
-    private static final TextTranslator textTranslator = new TextTranslator();
+    private static final Logger log = LoggerFactory.getLogger(LowerKeyHandler.class);
+    private static final ConcatenateRowsTranslator concatenateRowsTranslator = new ConcatenateRowsTranslator();
     private static final RemoveLinesAfterEmptyLineTranslator removeLinesAfterEmptyLineTranslator = new RemoveLinesAfterEmptyLineTranslator();
     private static final FxTextUtils  fxTextUtils = new FxTextUtils();
     private static final XmlDataReader xmlDataReader = new XmlDataReader();
     private static final XmlParser xmlParser = new XmlParser();
+    private static final String SUCCESSFUL_LOGIN = "<StageDisplayLoginSuccess />";
 
     private volatile boolean running = true;
     private final Text lowerKey;
@@ -44,7 +49,15 @@ public class LowerKeyHandler implements Runnable {
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))
             ) {
 
+                log.info("Connection to propresenter established at {}:{}", HOST.toString(), PORT.toString());
                 out.println(getLoginString());
+
+                if (SUCCESSFUL_LOGIN.equals(in.readLine())) {
+                    log.info("Login succeeded");
+                } else {
+                    log.error("Login failed with incorrect password: {}", PASSWORD.toString());
+                    running = false;
+                }
 
                 while (running && socket.isConnected()) {
                     if (in.ready()) {
@@ -54,34 +67,35 @@ public class LowerKeyHandler implements Runnable {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Connection to propresenter failed at {}:{}", HOST.toString(), PORT.toString(), e);
         }
-        Main.closeApp();
+        log.info("Closing program");
+        Platform.exit();
     }
 
-    public void terminate(Thread thread) {
+    public void terminate() {
         running = false;
-        thread.run();
     }
 
     private void update(BufferedReader in) throws IOException {
-        String sceneRawData = xmlDataReader.readXmlData(in);
-        String parsedText = xmlParser.parse(sceneRawData).getData("CurrentSlide");
-        String slideNotes = xmlParser.parse(sceneRawData).getData("CurrentSlideNotes");
+        String xmlRawData = xmlDataReader.readXmlData(in);
+        StageDisplay stageDisplay = xmlParser.parse(xmlRawData);
+        String slide = stageDisplay.getData("CurrentSlide");
+        String slideNotes = stageDisplay.getData("CurrentSlideNotes");
 
-        System.out.println("RAW XML:     " + sceneRawData);
-        System.out.println("Parsed text: " + parsedText);
-        System.out.println("Slide notes: " + slideNotes);
+        log.info("RAW XML: {}", xmlRawData);
+        log.debug("Slide notes: {}", slideNotes);
+        log.debug("Slide text unparsed: {}", slide);
         lowerKey.setText(" ");
 
-        if (!parsedText.isEmpty()) {
-            String currentSlideText = REMOVE_LINES_AFTER_EMPTY_LINE.isTrue()
-                    ? removeLinesAfterEmptyLineTranslator.transform(parsedText) : parsedText;
-            currentSlideText = TEXT_TRANSLATOR_ACTIVE.isTrue()
-                    ? textTranslator.transformSceneText(currentSlideText) : currentSlideText;
-            lowerKey.setFont(fxTextUtils.getOptimizedFont(currentSlideText, lowerKey.getWrappingWidth()));
-            lowerKey.setText(currentSlideText);
-            System.out.println("Processed text:\n" + currentSlideText);
+        if (!slide.isEmpty()) {
+            String slideText = REMOVE_LINES_AFTER_EMPTY_LINE.isTrue()
+                    ? removeLinesAfterEmptyLineTranslator.transform(slide) : slide;
+            slideText = TEXT_TRANSLATOR_ACTIVE.isTrue()
+                    ? concatenateRowsTranslator.transformSceneText(slideText) : slideText;
+            lowerKey.setFont(fxTextUtils.getOptimizedFont(slideText, lowerKey.getWrappingWidth()));
+            lowerKey.setText(slideText);
+            log.debug("Slide text parsed: {}", slideText);
         }
         midiModule.handleMessage(slideNotes);
     }

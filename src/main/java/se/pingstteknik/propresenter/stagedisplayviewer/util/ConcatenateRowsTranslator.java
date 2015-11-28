@@ -2,7 +2,7 @@ package se.pingstteknik.propresenter.stagedisplayviewer.util;
 
 import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.DIVIDER;
 
-public class TextTranslator {
+public class ConcatenateRowsTranslator {
 
     private static final String NEWLINE = "\n";
 

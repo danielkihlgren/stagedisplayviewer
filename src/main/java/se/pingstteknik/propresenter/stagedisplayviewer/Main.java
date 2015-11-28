@@ -1,12 +1,13 @@
 package se.pingstteknik.propresenter.stagedisplayviewer;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
 import se.pingstteknik.propresenter.stagedisplayviewer.eventhandler.SceneKeyTypedHandler;
 import se.pingstteknik.propresenter.stagedisplayviewer.runner.LowerKeyHandler;
@@ -15,8 +16,13 @@ import se.pingstteknik.propresenter.stagedisplayviewer.util.MidiModule;
 
 import java.io.IOException;
 
+/**
+ * @author Daniel Kihlgren
+ * @version 1.2.0
+ * @since 1.0.0
+ */
 public class Main extends Application {
-
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
     private static final String PROGRAM_TITLE = "Stage display Lower Key viewer";
     private static LowerKeyHandler lowerKeyHandler;
     private static Thread thread;
@@ -28,6 +34,7 @@ public class Main extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws IOException {
+        log.info("Starting program");
         final FxUtils fxUtils = new FxUtils();
 
         Property.loadProperties();
@@ -51,15 +58,9 @@ public class Main extends Application {
     private EventHandler<WindowEvent> getEventHandler() {
         return new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
-                System.out.println("Closing program");
                 midiModule.terminate();
-                lowerKeyHandler.terminate(thread);
-                closeApp();
+                lowerKeyHandler.terminate();
             }
         };
-    }
-    
-    public static void closeApp() {
-        Platform.exit();
     }
 }

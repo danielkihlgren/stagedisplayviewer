@@ -1,5 +1,7 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -12,8 +14,14 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
 
+/**
+ * @author Daniel Kihlgren
+ * @version 1.2.0
+ * @since 1.0.0
+ */
 public class XmlParser {
 
+    private static final Logger log = LoggerFactory.getLogger(XmlParser.class);
     private static final String FIELD_XML_ELEMENT = "Field";
     private static final String IDENTIFIER_XML_ATTRIBUTE = "identifier";
 
@@ -30,7 +38,7 @@ public class XmlParser {
             }
             return builder.build();
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            System.out.println("Parse error");
+            log.warn("Parse error", e);
         }
 
         return null;
