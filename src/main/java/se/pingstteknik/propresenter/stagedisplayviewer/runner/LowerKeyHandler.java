@@ -29,6 +29,7 @@ public class LowerKeyHandler implements Runnable {
     private static final XmlDataReader xmlDataReader = new XmlDataReader();
     private static final XmlParser xmlParser = new XmlParser();
     private static final String SUCCESSFUL_LOGIN = "<StageDisplayLoginSuccess />";
+    private static final String SUCCESSFUL_LOGIN_WINDOWS = "<StageDisplayLoginSuccess>";
 
     private volatile boolean running = true;
     private final Text lowerKey;
@@ -44,16 +45,17 @@ public class LowerKeyHandler implements Runnable {
         try (Socket socket = new Socket(HOST.toString(), PORT.toInt())) {
             try (
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))
             ) {
 
-                log.info("Connection to propresenter established at {}:{}", HOST.toString(), PORT.toString());
+                log.info("Connection to propresenter established at " + HOST.toString() + ":" + PORT.toString());
                 out.println(getLoginString());
 
-                if (SUCCESSFUL_LOGIN.equals(in.readLine())) {
+                String loginResponse = in.readLine();
+                if (SUCCESSFUL_LOGIN.equals(loginResponse) || SUCCESSFUL_LOGIN_WINDOWS.equals(loginResponse)) {
                     log.info("Login succeeded");
                 } else {
-                    log.error("Login failed with incorrect password: {}", PASSWORD.toString());
+                    log.error("Login failed with incorrect password: " + PASSWORD.toString() + ", with response: " + loginResponse);
                     running = false;
                 }
 
@@ -65,7 +67,7 @@ public class LowerKeyHandler implements Runnable {
                 }
             }
         } catch (IOException e) {
-            log.error("Connection to propresenter failed at {}:{}", HOST.toString(), PORT.toString(), e);
+            log.error("Connection to propresenter failed at " + HOST.toString() + ":" + PORT.toString(), e);
         }
         log.info("Closing program");
         Platform.exit();

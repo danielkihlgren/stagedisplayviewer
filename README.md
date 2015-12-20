@@ -52,5 +52,5 @@ Add midi module support. This makes it possible to send midi command from propre
 First release.
 
 # Known problems
-* Propresenter 5 for Windows does not support UTF-8 correctly which makes international characters to be shown incorrectly, e.g. Swedish characters ÅÄÖ are shown as ???.
+* Propresenter 5 for Windows does not support UTF-8 correctly which makes international characters to be shown incorrectly, e.g. Swedish characters ÅÄÖ are shown as ???. This is fixed in propresenter 6.
 * [Starting on secondary screen is not correctly implemented](https://github.com/danielkihlgren/stagedisplayviewer/issues/1)
