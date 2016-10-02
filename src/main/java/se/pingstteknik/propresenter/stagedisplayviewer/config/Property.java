@@ -26,6 +26,7 @@ public enum Property {
     RESPONSE_TIME_MILLIS("50"),
     OUTPUT_WIDTH_PERCENTAGE("90"),
     TEXT_TRANSLATOR_ACTIVE("true"),
+    PRESERVE_TWO_LINES("true"),
     MIDI("false"),
     REMOVE_LINES_AFTER_EMPTY_LINE("false");
 

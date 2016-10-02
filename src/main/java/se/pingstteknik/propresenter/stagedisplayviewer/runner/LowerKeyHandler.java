@@ -23,7 +23,7 @@ import static se.pingstteknik.propresenter.stagedisplayviewer.util.ThreadUtil.sl
 public class LowerKeyHandler implements Runnable {
 
     private static final Logger log = LoggerFactory.getLogger(LowerKeyHandler.class);
-    private static final ConcatenateRowsTranslator concatenateRowsTranslator = new ConcatenateRowsTranslator();
+    private static final ConcatenateRowsTranslator concatenateRowsTranslator = new ConcatenateRowsTranslator(PRESERVE_TWO_LINES.isTrue());
     private static final RemoveLinesAfterEmptyLineTranslator removeLinesAfterEmptyLineTranslator = new RemoveLinesAfterEmptyLineTranslator();
     private static final FxTextUtils  fxTextUtils = new FxTextUtils();
     private static final XmlDataReader xmlDataReader = new XmlDataReader();

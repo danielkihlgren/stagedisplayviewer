@@ -9,11 +9,17 @@ import static org.junit.Assert.assertThat;
  * @author danielkihlgren
  */
 public class ConcatenateRowsTranslatorTest {
-    private final ConcatenateRowsTranslator translator = new ConcatenateRowsTranslator();
-
+    private final ConcatenateRowsTranslator translator = new ConcatenateRowsTranslator(true);
 
     @Test
-    public void twoRowsShouldBeTransformedIntoOne() throws Exception {
+    public void twoRowsShouldBePreservedByDefault() throws Exception {
+        ConcatenateRowsTranslator translator = new ConcatenateRowsTranslator(true);
+        assertThat(translator.transformSceneText("rad 1\nrad 2"), is("rad 1\nrad 2"));
+    }
+
+    @Test
+    public void twoRowsShouldBeTransformedIntoOneWhenPreserveTwoLinesAreDisabled() throws Exception {
+        ConcatenateRowsTranslator translator = new ConcatenateRowsTranslator(false);
         assertThat(translator.transformSceneText("rad 1\nrad 2"), is("rad 1 rad 2"));
     }
 
