@@ -29,7 +29,7 @@ public class ConcatenateRowsTranslatorTest {
 
     @Test
     public void spacesShouldBeTrimmed() throws Exception {
-        assertThat(translator.transformSceneText("rad 1 \n rad 2\nrad 3\nrad 4"), is("rad 1 rad 2\nrad 3 rad 4"));
+        assertThat(translator.transformSceneText("  rad 1  \n  rad 2  \n  rad 3  \n  rad 4  "), is("rad 1 rad 2\nrad 3 rad 4"));
     }
 
 }

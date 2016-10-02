@@ -25,7 +25,7 @@ public class ConcatenateRowsTranslator {
             aggregatedText.append(rows[row].trim());
             aggregatedText.append(row % 2 == 0 ? DIVIDER : NEWLINE);
         }
-        aggregatedText.append(rows[rows.length-1]);
+        aggregatedText.append(rows[rows.length-1].trim());
 
         return aggregatedText.toString();
     }
