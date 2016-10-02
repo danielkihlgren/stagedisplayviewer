@@ -86,7 +86,6 @@ public class LowerKeyHandler implements Runnable {
         log.info("RAW XML: {}", xmlRawData);
         log.debug("Slide notes: {}", slideNotes);
         log.debug("Slide text unparsed: {}", slide);
-        lowerKey.setText(" ");
 
         if (!slide.isEmpty()) {
             String slideText = REMOVE_LINES_AFTER_EMPTY_LINE.isTrue()
@@ -96,6 +95,8 @@ public class LowerKeyHandler implements Runnable {
             lowerKey.setFont(fxTextUtils.getOptimizedFont(slideText, lowerKey.getWrappingWidth()));
             lowerKey.setText(slideText);
             log.debug("Slide text parsed: {}", slideText);
+        } else {
+            lowerKey.setText(" ");
         }
         midiModule.handleMessage(slideNotes);
     }
