@@ -48,7 +48,7 @@ public class Main extends Application {
         Scene scene = fxUtils.createScene(lowerKey);
         scene.setOnKeyTyped(new SceneKeyTypedHandler(primaryStage));
         primaryStage.setScene(scene);
-        primaryStage.setX(400);
+        fxUtils.startOnCorrectScreen(primaryStage);
         primaryStage.setOnCloseRequest(getEventHandler());
         primaryStage.setFullScreen(true);
         primaryStage.show();

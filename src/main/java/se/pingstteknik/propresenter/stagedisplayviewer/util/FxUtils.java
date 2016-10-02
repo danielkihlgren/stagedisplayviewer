@@ -11,6 +11,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.*;
 
@@ -20,7 +21,7 @@ public class FxUtils {
 
     public Text createLowerKey() {
         Text lowerKey = new Text();
-        lowerKey.setFont(Font.font(FONT_FAMILY.toString(), FontWeight.MEDIUM, 60));
+        lowerKey.setFont(Font.font(FONT_FAMILY.toString(), FontWeight.MEDIUM, MAX_FONT_SIZE.toInt()));
         lowerKey.setFill(Color.WHITE);
         lowerKey.setWrappingWidth(getWrappingWidth());
         lowerKey.setTextAlignment(TextAlignment.CENTER);
@@ -32,14 +33,24 @@ public class FxUtils {
         return new Scene(createRoot(lowerKey), bounds.getWidth(), bounds.getHeight());
     }
 
+    public void startOnCorrectScreen(Stage stage) {
+        Rectangle2D visualBounds = getScreen().getVisualBounds();
+        stage.setX(visualBounds.getMinX() + 100);
+        stage.setY(visualBounds.getMinY() + 100);
+    }
+
     private double getWrappingWidth() {
         return getScreenBounds().getWidth() * outputWidthPercentage();
     }
 
     private Rectangle2D getScreenBounds() {
+        return getScreen().getBounds();
+    }
+
+    private Screen getScreen() {
         return OUTPUT_SCREEN.toInt() <= Screen.getScreens().size()
-                ? Screen.getScreens().get(OUTPUT_SCREEN.toInt()-1).getBounds()
-                : Screen.getPrimary().getBounds();
+                ? Screen.getScreens().get(OUTPUT_SCREEN.toInt()-1)
+                : Screen.getPrimary();
     }
 
     private double outputWidthPercentage() {
