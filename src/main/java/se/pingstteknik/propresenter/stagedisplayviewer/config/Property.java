@@ -11,7 +11,7 @@ import static java.lang.Integer.parseInt;
 
 /**
  * @author Daniel Kihlgren
- * @version 1.2.0
+ * @version 1.3.0
  * @since 1.0.0
  */
 public enum Property {
@@ -26,7 +26,7 @@ public enum Property {
     RESPONSE_TIME_MILLIS("50"),
     OUTPUT_WIDTH_PERCENTAGE("90"),
     TEXT_TRANSLATOR_ACTIVE("true"),
-    PRESERVE_TWO_LINES("true"),
+    PRESERVE_TWO_LINES("false"),
     MIDI("false"),
     REMOVE_LINES_AFTER_EMPTY_LINE("false");
 
