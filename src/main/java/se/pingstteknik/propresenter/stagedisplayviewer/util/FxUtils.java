@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -13,11 +14,11 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.*;
 
 public class FxUtils {
-
-    private static final String BLACK_BACKGROUND = "-fx-background-color: #000;";
 
     public Text createLowerKey() {
         Text lowerKey = new Text();
@@ -25,12 +26,21 @@ public class FxUtils {
         lowerKey.setFill(Color.WHITE);
         lowerKey.setWrappingWidth(getWrappingWidth());
         lowerKey.setTextAlignment(TextAlignment.CENTER);
+        DropShadow ds = new DropShadow();
+        ds.setOffsetY(0.0);
+        ds.setOffsetX(0.0);
+        ds.setColor(Color.BLACK);
+        ds.setSpread(0.5);
+        lowerKey.setEffect(ds);
         return lowerKey;
     }
 
     public Scene createScene(Text lowerKey) {
         Rectangle2D bounds = getScreenBounds();
-        return new Scene(createRoot(lowerKey), bounds.getWidth(), bounds.getHeight());
+        Scene scene = new Scene(createRoot(lowerKey), bounds.getWidth(), bounds.getHeight());
+        scene.getStylesheets().add("styles.css");
+        scene.getStylesheets().add("file:///" + new File("styles.css").getAbsolutePath().replace("\\", "/"));
+        return scene;
     }
 
     public void startOnCorrectScreen(Stage stage) {
@@ -59,7 +69,6 @@ public class FxUtils {
 
     private GridPane createRoot(Text lowerKey) {
         GridPane root = new GridPane();
-        root.setStyle(BLACK_BACKGROUND);
         root.setHgap(10);
         root.setVgap(10);
         root.setAlignment(Pos.BOTTOM_CENTER);

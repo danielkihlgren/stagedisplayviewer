@@ -28,6 +28,10 @@
             <outputDirectory>/</outputDirectory>
         </file>
         <file>
+            <source>src/main/resource/styles.css</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        <file>
             <source>${project.build.directory}/jfx/app/StageDisplayViewer-jfx.jar</source>
             <outputDirectory>/</outputDirectory>
         </file>
