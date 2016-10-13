@@ -23,6 +23,7 @@ public enum Property {
     FONT_FAMILY("Droid serif"),
     MIN_FONT_SIZE("30"),
     MAX_FONT_SIZE("60"),
+    MARGIN_BOTTOM("10"),
     RESPONSE_TIME_MILLIS("50"),
     OUTPUT_WIDTH_PERCENTAGE("90"),
     TEXT_TRANSLATOR_ACTIVE("true"),

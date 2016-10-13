@@ -63,7 +63,7 @@ public class FxUtils {
         root.setHgap(10);
         root.setVgap(10);
         root.setAlignment(Pos.BOTTOM_CENTER);
-        root.setPadding(new Insets(10, 10, 10, 10));
+        root.setPadding(new Insets(10, 10, MARGIN_BOTTOM.toInt(), 10));
         root.add(lowerKey, 0, 0, 2, 1);
         return root;
     }
