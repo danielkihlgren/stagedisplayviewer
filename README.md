@@ -25,12 +25,23 @@ Text transform support: compactify rows by removing every second line break, i.e
 Active module in properies file config.properties
 
     TEXT_TRANSLATOR_ACTIVE = true
+
+## Preserve two lines
+This setting will preserve two lines and not convert that into one line when text_translator_active is true
+
+    PRESERVE_TWO_LINES = true  
    
 ## Multi language support
 Removes lines after an empty line
 This is useful if multiple languages are shown separated with a line break and only the first language are to be shown
 
     REMOVE_LINES_AFTER_EMPTY_LINE = true
+    
+## Change margin below text
+This setting sets the margin below the text
+
+    MARGIN_BOTTOM = 30
+
 
 ## Midi module
 Midi module makes it possible to send midi commands from propresenter.
@@ -50,6 +61,15 @@ Where
 The 0 indicates the channel, 60 indicates the note Middle C and the 92 is an arbitrary key-down velocity value
 
 # [Releases](https://github.com/danielkihlgren/stagedisplayviewer/releases)
+
+
+[v1.4.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.4.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.4.0/StageDisplayViewer.zip)
+Add feature #9 to make it possible to change margin below text
+
+[v1.3.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.3.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.3.0/StageDisplayViewer.zip)
+Add feature #8 to make it possible to preserve two rows
+Bug fixes #1, #4
+
 [v1.2.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.2.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.2.0/StageDisplayViewer.zip)
 Add support for propresenter 6 for windows
 
