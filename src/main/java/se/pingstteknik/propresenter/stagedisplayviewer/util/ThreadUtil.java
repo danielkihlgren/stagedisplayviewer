@@ -1,11 +1,9 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.util;
 
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.RESPONSE_TIME_MILLIS;
-
 public class ThreadUtil {
-    public static void sleep() {
+    public static void sleep(int sleepTime) {
         try {
-            Thread.sleep(RESPONSE_TIME_MILLIS.toInt());
+            Thread.sleep(sleepTime);
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }

@@ -19,6 +19,9 @@ public class XmlDataReader {
         boolean readCompleted = false;
         while (!readCompleted) {
             String inputLine = in.readLine();
+            if (inputLine == null) {
+                return null;
+            }
             System.out.println(inputLine);
             if (inputLine.contains(XML_START_TAG)) {
                 readXmlData.setLength(0);

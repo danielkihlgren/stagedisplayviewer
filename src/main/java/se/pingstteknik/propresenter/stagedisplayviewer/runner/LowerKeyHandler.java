@@ -14,6 +14,7 @@ import java.net.Socket;
 
 import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.*;
 import static se.pingstteknik.propresenter.stagedisplayviewer.util.ThreadUtil.sleep;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.RESPONSE_TIME_MILLIS;
 
 /**
  * @author Daniel Kihlgren
@@ -32,6 +33,7 @@ public class LowerKeyHandler implements Runnable {
     private static final String SUCCESSFUL_LOGIN_WINDOWS = "<StageDisplayLoginSuccess>";
 
     private volatile boolean running = true;
+    private volatile boolean activeConnection = true;
     private final Text lowerKey;
     private final MidiModule midiModule;
 
@@ -42,43 +44,51 @@ public class LowerKeyHandler implements Runnable {
 
     @Override
     public void run() {
-        try (Socket socket = new Socket(HOST.toString(), PORT.toInt())) {
-            try (
-                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))
-            ) {
+        while (running) {
+            try (Socket socket = new Socket(HOST.toString(), PORT.toInt())) {
+                try (
+                        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))
+                ) {
+                    activeConnection = true;
+                    log.info("Connection to propresenter established at " + HOST.toString() + ":" + PORT.toString());
+                    out.println(getLoginString());
 
-                log.info("Connection to propresenter established at " + HOST.toString() + ":" + PORT.toString());
-                out.println(getLoginString());
-
-                String loginResponse = in.readLine();
-                if (SUCCESSFUL_LOGIN.equals(loginResponse) || SUCCESSFUL_LOGIN_WINDOWS.equals(loginResponse)) {
-                    log.info("Login succeeded");
-                } else {
-                    log.error("Login failed with incorrect password: " + PASSWORD.toString() + ", with response: " + loginResponse);
-                    running = false;
-                }
-
-                while (running && socket.isConnected()) {
-                    if (in.ready()) {
-                        update(in);
+                    String loginResponse = in.readLine();
+                    if (SUCCESSFUL_LOGIN.equals(loginResponse) || SUCCESSFUL_LOGIN_WINDOWS.equals(loginResponse)) {
+                        log.info("Login succeeded");
+                    } else {
+                        log.error("Login failed with incorrect password: " + PASSWORD.toString() + ", with response: " + loginResponse);
+                        running = false;
                     }
-                    sleep();
+                    while (running && activeConnection && socket.isConnected()) {
+                        activeConnection = update(in);
+                        sleep(RESPONSE_TIME_MILLIS.toInt());
+                    }
+                    log.info("Connection lost");
                 }
+            } catch (IOException e) {
+                log.error("Connection to propresenter failed at " + HOST.toString() + ":" + PORT.toString(), e);
             }
-        } catch (IOException e) {
-            log.error("Connection to propresenter failed at " + HOST.toString() + ":" + PORT.toString(), e);
+            sleep(500);
         }
+
         log.info("Closing program");
         Platform.exit();
     }
 
     public void terminate() {
+        log.info("Program is closing");
         running = false;
     }
 
-    private void update(BufferedReader in) throws IOException {
+    private boolean update(BufferedReader in) throws IOException {
         String xmlRawData = xmlDataReader.readXmlData(in);
+        if (xmlRawData == null) {
+            lowerKey.setText(" ");
+            return false;
+        }
+
         StageDisplay stageDisplay = xmlParser.parse(xmlRawData);
         String slide = stageDisplay.getData("CurrentSlide");
         String slideNotes = stageDisplay.getData("CurrentSlideNotes");
@@ -99,6 +109,7 @@ public class LowerKeyHandler implements Runnable {
             lowerKey.setText(" ");
         }
         midiModule.handleMessage(slideNotes);
+        return true;
     }
 
     private String getLoginString() {
