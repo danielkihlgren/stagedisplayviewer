@@ -62,6 +62,8 @@ The 0 indicates the channel, 60 indicates the note Middle C and the 92 is an arb
 
 # [Releases](https://github.com/danielkihlgren/stagedisplayviewer/releases)
 
+[v1.5.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.5.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.5.0/StageDisplayViewer.zip)
+Make it more resilience by adding auto-reconnect
 
 [v1.4.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.4.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.4.0/StageDisplayViewer.zip)
 Add feature #9 to make it possible to change margin below text
