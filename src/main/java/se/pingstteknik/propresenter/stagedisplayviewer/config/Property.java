@@ -1,13 +1,13 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.config;
 
-import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
+import static java.lang.Integer.parseInt;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import static java.lang.Integer.parseInt;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
 
 /**
  * @author Daniel Kihlgren
@@ -29,7 +29,8 @@ public enum Property {
     TEXT_TRANSLATOR_ACTIVE("true"),
     PRESERVE_TWO_LINES("false"),
     MIDI("false"),
-    REMOVE_LINES_AFTER_EMPTY_LINE("false");
+    REMOVE_LINES_AFTER_EMPTY_LINE("false"),
+	FADE_TIME("0"); // Length of fade transition in milliseconds.
 
     private static final Logger log = LoggerFactory.getLogger(Property.class);
     private static final Properties properties = new Properties();

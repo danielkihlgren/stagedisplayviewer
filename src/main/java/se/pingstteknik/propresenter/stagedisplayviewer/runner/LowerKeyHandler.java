@@ -1,10 +1,13 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.runner;
 
-import javafx.application.Platform;
-import javafx.scene.text.Text;
-import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
-import se.pingstteknik.propresenter.stagedisplayviewer.model.StageDisplay;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.*;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.HOST;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.PASSWORD;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.PORT;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.PRESERVE_TWO_LINES;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.REMOVE_LINES_AFTER_EMPTY_LINE;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.RESPONSE_TIME_MILLIS;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.TEXT_TRANSLATOR_ACTIVE;
+import static se.pingstteknik.propresenter.stagedisplayviewer.util.ThreadUtil.sleep;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,9 +15,20 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.*;
-import static se.pingstteknik.propresenter.stagedisplayviewer.util.ThreadUtil.sleep;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.RESPONSE_TIME_MILLIS;
+import javafx.animation.FadeTransition;
+import javafx.application.Platform;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
+import se.pingstteknik.propresenter.stagedisplayviewer.model.StageDisplay;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.ConcatenateRowsTranslator;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.FxTextUtils;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.MidiModule;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.RemoveLinesAfterEmptyLineTranslator;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.XmlDataReader;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.XmlParser;
 
 /**
  * @author Daniel Kihlgren
@@ -36,10 +50,20 @@ public class LowerKeyHandler implements Runnable {
     private volatile boolean activeConnection = true;
     private final Text lowerKey;
     private final MidiModule midiModule;
+    private final FadeTransition fadeOut, fadeIn;
 
     public LowerKeyHandler(Text lowerKey, MidiModule midiModule) throws IOException {
         this.lowerKey = lowerKey;
         this.midiModule = midiModule;
+        
+        // Initialize fade animations for updating stage display text.
+        fadeOut = new FadeTransition(Duration.millis(Property.FADE_TIME.toInt()), lowerKey);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        
+        fadeIn = new FadeTransition(Duration.millis(Property.FADE_TIME.toInt()), lowerKey);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
     }
 
     @Override
@@ -103,7 +127,18 @@ public class LowerKeyHandler implements Runnable {
             slideText = TEXT_TRANSLATOR_ACTIVE.isTrue()
                     ? concatenateRowsTranslator.transformSceneText(slideText) : slideText;
             lowerKey.setFont(fxTextUtils.getOptimizedFont(slideText, lowerKey.getWrappingWidth()));
-            lowerKey.setText(slideText);
+            
+            // Play the fade out/in animation if the slide text changes.
+            if(!lowerKey.getText().equals(slideText)) {
+	            final String text = slideText; // needs to be final for event handler.
+	            fadeOut.setOnFinished(e -> {
+	                lowerKey.setText(text);
+	                fadeIn.play();
+	            });
+	            fadeOut.play();
+            } else {
+            	lowerKey.setText(slideText);
+            }
             log.debug("Slide text parsed: {}", slideText);
         } else {
             lowerKey.setText(" ");
