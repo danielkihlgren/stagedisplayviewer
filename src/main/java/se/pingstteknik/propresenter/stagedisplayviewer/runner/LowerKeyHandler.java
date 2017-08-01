@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
 import se.pingstteknik.propresenter.stagedisplayviewer.model.StageDisplay;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.CapitalizeRowsTranslator;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.ConcatenateRowsTranslator;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.FxTextUtils;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
@@ -124,6 +125,8 @@ public class LowerKeyHandler implements Runnable {
         if (!slide.isEmpty()) {
             String slideText = REMOVE_LINES_AFTER_EMPTY_LINE.isTrue()
                     ? removeLinesAfterEmptyLineTranslator.transform(slide) : slide;
+            slideText = Property.CAPITALIZE_LINE.isTrue() // capitalize lines if specified in config.
+            		? CapitalizeRowsTranslator.transform(slide) : slide;
             slideText = TEXT_TRANSLATOR_ACTIVE.isTrue()
                     ? concatenateRowsTranslator.transformSceneText(slideText) : slideText;
             lowerKey.setFont(fxTextUtils.getOptimizedFont(slideText, lowerKey.getWrappingWidth()));
@@ -137,6 +140,7 @@ public class LowerKeyHandler implements Runnable {
 	            });
 	            fadeOut.play();
             } else {
+            	// Make sure initial text is displayed.
             	lowerKey.setText(slideText);
             }
             log.debug("Slide text parsed: {}", slideText);

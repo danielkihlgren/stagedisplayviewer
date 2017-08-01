@@ -30,7 +30,8 @@ public enum Property {
     PRESERVE_TWO_LINES("false"),
     MIDI("false"),
     REMOVE_LINES_AFTER_EMPTY_LINE("false"),
-	FADE_TIME("0"); // Length of fade transition in milliseconds.
+	FADE_TIME("0"), // Length of fade transition in milliseconds.
+	CAPITALIZE_LINE("true"); // true if first word in every line should be capitalized.
 
     private static final Logger log = LoggerFactory.getLogger(Property.class);
     private static final Properties properties = new Properties();
