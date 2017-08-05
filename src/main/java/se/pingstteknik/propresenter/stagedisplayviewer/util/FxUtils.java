@@ -78,7 +78,14 @@ public class FxUtils {
     }
 
     private Rectangle2D getScreenBounds() {
-        return getScreen().getBounds();
+    	// Uses property width/height if specified, or defaults to screen bounds.
+    	Rectangle2D screen = getScreen().getBounds();
+    	double width = Property.WIDTH.toDouble();
+    	double height = Property.HEIGHT.toDouble();
+    	return new Rectangle2D(screen.getMinX(), screen.getMinY(), 
+			width > 0 ? width : screen.getWidth(), 
+			height > 0 ? height : screen.getHeight()
+		);
     }
 
     private Screen getScreen() {

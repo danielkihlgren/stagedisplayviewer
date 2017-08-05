@@ -50,7 +50,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         fxUtils.startOnCorrectScreen(primaryStage);
         primaryStage.setOnCloseRequest(getEventHandler());
-//        primaryStage.setFullScreen(true);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
         thread.start();
     }

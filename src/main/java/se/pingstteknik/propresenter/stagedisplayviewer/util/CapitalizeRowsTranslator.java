@@ -12,11 +12,11 @@ public class CapitalizeRowsTranslator {
      * @return
      */
     public static String transform(String text) {
-        Matcher m = FIRST_CHAR_REGEX.matcher(text);
-        StringBuffer result = new StringBuffer();
-        while(m.find()) // for each match, replace with capitalized text.
-            m.appendReplacement(result, m.group().toUpperCase());
-        m.appendTail(result);
-        return result.toString();
+	Matcher m = FIRST_CHAR_REGEX.matcher(text);
+	StringBuffer result = new StringBuffer();
+	while(m.find()) // for each match, replace with capitalized text.
+	    m.appendReplacement(result, m.group().toUpperCase());
+	m.appendTail(result);
+	return result.toString();
     }
 }
