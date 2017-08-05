@@ -31,7 +31,8 @@ public enum Property {
     MIDI("false"),
     REMOVE_LINES_AFTER_EMPTY_LINE("false"),
 	FADE_TIME("0"), // Length of fade transition in milliseconds.
-	CAPITALIZE_LINE("true"); // true if first word in every line should be capitalized.
+	CAPITALIZE_LINES("true"), // true if first word in every line should be capitalized.
+	TEXT_ALIGN("justify"); // Specifies the text alignment. Should be one of (Case insensitive): Center, Right, Left, or Justify.
 
     private static final Logger log = LoggerFactory.getLogger(Property.class);
     private static final Properties properties = new Properties();

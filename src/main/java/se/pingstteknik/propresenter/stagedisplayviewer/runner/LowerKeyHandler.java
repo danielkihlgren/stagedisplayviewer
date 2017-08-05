@@ -125,7 +125,7 @@ public class LowerKeyHandler implements Runnable {
         if (!slide.isEmpty()) {
             String slideText = REMOVE_LINES_AFTER_EMPTY_LINE.isTrue()
                     ? removeLinesAfterEmptyLineTranslator.transform(slide) : slide;
-            slideText = Property.CAPITALIZE_LINE.isTrue() // capitalize lines if specified in config.
+            slideText = Property.CAPITALIZE_LINES.isTrue() // capitalize lines if specified in config.
             		? CapitalizeRowsTranslator.transform(slide) : slide;
             slideText = TEXT_TRANSLATOR_ACTIVE.isTrue()
                     ? concatenateRowsTranslator.transformSceneText(slideText) : slideText;
