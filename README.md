@@ -31,6 +31,21 @@ This setting will preserve two lines and not convert that into one line when tex
 
     PRESERVE_TWO_LINES = true  
    
+## Custom New Line Insertion
+Makes it possible to explicitly place each new line in the slide.
+In a slide that should have custom new lines, add commands line this to the Stage Display Notes:
+   
+   NEWLINE x
+
+Where x is the word the newline should be inserted after (can have multiple numbers after NEWLINE separated by a space).
+Example:
+'NEWLINE 1 4' inserts newlines after the first and fourth word.
+
+All whitespace other than what is specified in the NEWLINE command is removed.
+
+*** Can be used on the same slide as a Midi command, just separate them with a space:
+'NEWLINE 1 4 Midi 0 60 92'
+
 ## Multi language support
 Removes lines after an empty line
 This is useful if multiple languages are shown separated with a line break and only the first language are to be shown

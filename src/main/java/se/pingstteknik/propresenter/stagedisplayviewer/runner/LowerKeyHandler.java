@@ -23,6 +23,7 @@ import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
 import se.pingstteknik.propresenter.stagedisplayviewer.model.StageDisplay;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.CapitalizeRowsTranslator;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.ConcatenateRowsTranslator;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.CustomNewLineTranslator;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.FxTextUtils;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
@@ -129,6 +130,7 @@ public class LowerKeyHandler implements Runnable {
             		? CapitalizeRowsTranslator.transform(slide) : slide;
             slideText = TEXT_TRANSLATOR_ACTIVE.isTrue()
                     ? concatenateRowsTranslator.transformSceneText(slideText) : slideText;
+            slideText = CustomNewLineTranslator.translate(slideText, slideNotes);
             lowerKey.setFont(fxTextUtils.getOptimizedFont(slideText, lowerKey.getWrappingWidth()));
             
             // Play the fade out/in animation if the slide text changes.
