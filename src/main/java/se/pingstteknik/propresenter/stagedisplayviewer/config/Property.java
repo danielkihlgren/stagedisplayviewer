@@ -1,18 +1,18 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.config;
 
-import static java.lang.Double.parseDouble;
-import static java.lang.Integer.parseInt;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
+import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
 /**
  * @author Daniel Kihlgren
- * @version 1.3.0
+ * @version 1.6.0
  * @since 1.0.0
  */
 public enum Property {
@@ -32,7 +32,7 @@ public enum Property {
     MIDI("false"),
     REMOVE_LINES_AFTER_EMPTY_LINE("false"),
 	FADE_TIME("0"), // Length of fade transition in milliseconds.
-	CAPITALIZE_LINES("true"), // true if first word in every line should be capitalized.
+	CAPITALIZE_LINES("false"), // true if first word in every line should be capitalized.
 	TEXT_ALIGN("justify"), // Specifies the text alignment. Should be one of (Case insensitive): Center, Right, Left, or Justify.
 	HEIGHT("-1"), // Height of display
 	WIDTH("-1"); // Width of display (-1 if default)
