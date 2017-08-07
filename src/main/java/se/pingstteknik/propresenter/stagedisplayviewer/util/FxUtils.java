@@ -1,5 +1,13 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.util;
 
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.FONT_FAMILY;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.MARGIN_BOTTOM;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.MAX_FONT_SIZE;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.OUTPUT_SCREEN;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.OUTPUT_WIDTH_PERCENTAGE;
+
+import java.io.File;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -13,19 +21,17 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.io.File;
-
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.*;
+import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
 
 public class FxUtils {
+    private static final Logger log = LoggerFactory.getLogger(FxUtils.class);
 
     public Text createLowerKey() {
         Text lowerKey = new Text();
         lowerKey.setFont(Font.font(FONT_FAMILY.toString(), FontWeight.MEDIUM, MAX_FONT_SIZE.toInt()));
         lowerKey.setFill(Color.WHITE);
         lowerKey.setWrappingWidth(getWrappingWidth());
-        lowerKey.setTextAlignment(TextAlignment.CENTER);
+        lowerKey.setTextAlignment(getAlignment());
         DropShadow ds = new DropShadow();
         ds.setOffsetY(0.0);
         ds.setOffsetX(0.0);
@@ -33,6 +39,24 @@ public class FxUtils {
         ds.setSpread(0.5);
         lowerKey.setEffect(ds);
         return lowerKey;
+    }
+    
+    /**
+     * Converts the String property TextAlignment to the appropriate TextAlignment.
+     * @return
+     */
+    private TextAlignment getAlignment() {
+    	try {
+    		return TextAlignment.valueOf(Property.TEXT_ALIGN.toString().toUpperCase());
+    	} catch(IllegalArgumentException e) {
+    		log.warn(String.format(
+				"Invalid TEXT_ALIGN property: %s. It should be one of (Case insensitive): Center, Right, Left, or Justify.",
+				Property.TEXT_ALIGN.toString()
+				), e
+			);
+    		// Default to center align.
+    		return TextAlignment.CENTER;
+    	}
     }
 
     public Scene createScene(Text lowerKey) {
@@ -54,7 +78,14 @@ public class FxUtils {
     }
 
     private Rectangle2D getScreenBounds() {
-        return getScreen().getBounds();
+    	// Uses property width/height if specified, or defaults to screen bounds.
+    	Rectangle2D screen = getScreen().getBounds();
+    	double width = Property.WIDTH.toDouble();
+    	double height = Property.HEIGHT.toDouble();
+    	return new Rectangle2D(screen.getMinX(), screen.getMinY(), 
+			width > 0 ? width : screen.getWidth(), 
+			height > 0 ? height : screen.getHeight()
+		);
     }
 
     private Screen getScreen() {

@@ -1,5 +1,7 @@
 package se.pingstteknik.propresenter.stagedisplayviewer;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -13,8 +15,6 @@ import se.pingstteknik.propresenter.stagedisplayviewer.util.FxUtils;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.MidiModule;
-
-import java.io.IOException;
 
 /**
  * @author Daniel Kihlgren

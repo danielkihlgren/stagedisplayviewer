@@ -1,13 +1,14 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.config;
 
-import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
+import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import static java.lang.Integer.parseInt;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
 
 /**
  * @author Daniel Kihlgren
@@ -29,8 +30,13 @@ public enum Property {
     TEXT_TRANSLATOR_ACTIVE("true"),
     PRESERVE_TWO_LINES("false"),
     MIDI("false"),
-    REMOVE_LINES_AFTER_EMPTY_LINE("false");
-
+    REMOVE_LINES_AFTER_EMPTY_LINE("false"),
+	FADE_TIME("0"), // Length of fade transition in milliseconds.
+	CAPITALIZE_LINES("true"), // true if first word in every line should be capitalized.
+	TEXT_ALIGN("justify"), // Specifies the text alignment. Should be one of (Case insensitive): Center, Right, Left, or Justify.
+	HEIGHT("-1"), // Height of display
+	WIDTH("-1"); // Width of display (-1 if default)
+	
     private static final Logger log = LoggerFactory.getLogger(Property.class);
     private static final Properties properties = new Properties();
     private static final String PROPERTIES_FILE_NAME = "config.properties";
@@ -47,6 +53,10 @@ public enum Property {
 
     public int toInt() {
         return parseInt(toString());
+    }
+    
+    public double toDouble() {
+        return parseDouble(toString());
     }
 
     public boolean isTrue() {

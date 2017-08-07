@@ -1,8 +1,15 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.util;
 
-import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.sound.midi.*;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Receiver;
+import javax.sound.midi.ShortMessage;
+
+import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
 
 /**
  * Midi module to support midi commands to be extracted from propresenter slides
@@ -15,6 +22,7 @@ public class MidiModule {
     private static final Logger log = LoggerFactory.getLogger(MidiModule.class);
     private final Receiver receiver;
     private String lastMessage;
+    private static final Pattern MIDI_COMMAND_REGEX = Pattern.compile("(?i)Midi(?-i) (\\d+) (\\d+) (\\d+)");
 
     public MidiModule() {
         Receiver tempReceiver = null;
@@ -31,10 +39,15 @@ public class MidiModule {
     }
 
     public void handleMessage(String message) {
-        if (receiver !=null && message.matches("Midi \\d* \\d* \\d*") && !message.equals(lastMessage)) {
-            String[] split = message.split(" ");
+    	Matcher m = MIDI_COMMAND_REGEX.matcher(message);
+        if (receiver !=null && m.find() && !message.equals(lastMessage)) {
             try {
-                ShortMessage shortMessage = new ShortMessage(ShortMessage.NOTE_ON, Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]));
+                ShortMessage shortMessage = new ShortMessage(
+            		ShortMessage.NOTE_ON, 
+            		Integer.valueOf(m.group(1)), 
+            		Integer.valueOf(m.group(2)), 
+            		Integer.valueOf(m.group(3))
+        		);
                 receiver.send(shortMessage, -1);
                 log.debug("Midi message sent: {}", message);
             } catch (InvalidMidiDataException e) {
