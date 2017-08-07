@@ -1,13 +1,12 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.runner;
 
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.HOST;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.PASSWORD;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.PORT;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.PRESERVE_TWO_LINES;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.REMOVE_LINES_AFTER_EMPTY_LINE;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.RESPONSE_TIME_MILLIS;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.TEXT_TRANSLATOR_ACTIVE;
-import static se.pingstteknik.propresenter.stagedisplayviewer.util.ThreadUtil.sleep;
+import javafx.animation.FadeTransition;
+import javafx.application.Platform;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
+import se.pingstteknik.propresenter.stagedisplayviewer.model.StageDisplay;
+import se.pingstteknik.propresenter.stagedisplayviewer.util.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,26 +14,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import javafx.animation.FadeTransition;
-import javafx.application.Platform;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
-import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
-import se.pingstteknik.propresenter.stagedisplayviewer.model.StageDisplay;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.CapitalizeRowsTranslator;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.ConcatenateRowsTranslator;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.CustomNewLineTranslator;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.FxTextUtils;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.MidiModule;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.RemoveLinesAfterEmptyLineTranslator;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.XmlDataReader;
-import se.pingstteknik.propresenter.stagedisplayviewer.util.XmlParser;
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.*;
+import static se.pingstteknik.propresenter.stagedisplayviewer.util.ThreadUtil.sleep;
 
 /**
  * @author Daniel Kihlgren
- * @version 1.2.0
+ * @version 1.6.0
  * @since 1.0.0
  */
 public class LowerKeyHandler implements Runnable {
@@ -126,11 +111,11 @@ public class LowerKeyHandler implements Runnable {
         if (!slide.isEmpty()) {
             String slideText = REMOVE_LINES_AFTER_EMPTY_LINE.isTrue()
                     ? removeLinesAfterEmptyLineTranslator.transform(slide) : slide;
-            slideText = Property.CAPITALIZE_LINES.isTrue() // capitalize lines if specified in config.
-            		? CapitalizeRowsTranslator.transform(slide) : slide;
+            slideText = CustomNewLineTranslator.translate(slideText, slideNotes);
             slideText = TEXT_TRANSLATOR_ACTIVE.isTrue()
                     ? concatenateRowsTranslator.transformSceneText(slideText) : slideText;
-            slideText = CustomNewLineTranslator.translate(slideText, slideNotes);
+            slideText = Property.CAPITALIZE_LINES.isTrue() // capitalize lines if specified in config.
+                    ? CapitalizeRowsTranslator.transform(slideText) : slideText;
             lowerKey.setFont(fxTextUtils.getOptimizedFont(slideText, lowerKey.getWrappingWidth()));
             
             // Play the fade out/in animation if the slide text changes.
