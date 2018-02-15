@@ -21,6 +21,7 @@ public enum Property {
     PASSWORD("password"),
     DIVIDER(" "),
     OUTPUT_SCREEN("1"),
+    START_IN_FULLSCREEN("true"),
     FONT_FAMILY("Droid serif"),
     MIN_FONT_SIZE("30"),
     MAX_FONT_SIZE("60"),

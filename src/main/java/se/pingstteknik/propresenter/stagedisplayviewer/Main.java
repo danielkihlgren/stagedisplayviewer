@@ -1,7 +1,5 @@
 package se.pingstteknik.propresenter.stagedisplayviewer;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -16,9 +14,11 @@ import se.pingstteknik.propresenter.stagedisplayviewer.util.Logger;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.LoggerFactory;
 import se.pingstteknik.propresenter.stagedisplayviewer.util.MidiModule;
 
+import java.io.IOException;
+
 /**
  * @author Daniel Kihlgren
- * @version 1.2.0
+ * @version 1.6.0
  * @since 1.0.0
  */
 public class Main extends Application {
@@ -50,7 +50,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         fxUtils.startOnCorrectScreen(primaryStage);
         primaryStage.setOnCloseRequest(getEventHandler());
-        primaryStage.setFullScreen(true);
+        primaryStage.setFullScreen(Property.START_IN_FULLSCREEN.isTrue());
         primaryStage.show();
         thread.start();
     }
