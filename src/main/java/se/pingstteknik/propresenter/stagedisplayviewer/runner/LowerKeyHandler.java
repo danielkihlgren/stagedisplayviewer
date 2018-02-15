@@ -116,13 +116,13 @@ public class LowerKeyHandler implements Runnable {
                     ? concatenateRowsTranslator.transformSceneText(slideText) : slideText;
             slideText = Property.CAPITALIZE_LINES.isTrue() // capitalize lines if specified in config.
                     ? CapitalizeRowsTranslator.transform(slideText) : slideText;
-            lowerKey.setFont(fxTextUtils.getOptimizedFont(slideText, lowerKey.getWrappingWidth()));
-            
+
             // Play the fade out/in animation if the slide text changes.
             if(!lowerKey.getText().equals(slideText)) {
 	            final String text = slideText; // needs to be final for event handler.
 	            fadeOut.setOnFinished(e -> {
 	                lowerKey.setText(text);
+                    lowerKey.setFont(fxTextUtils.getOptimizedFont(text, lowerKey.getWrappingWidth()));
 	                fadeIn.play();
 	            });
 	            fadeOut.play();
