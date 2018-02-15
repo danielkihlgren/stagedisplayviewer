@@ -120,19 +120,28 @@ public class LowerKeyHandler implements Runnable {
             // Play the fade out/in animation if the slide text changes.
             if(!lowerKey.getText().equals(slideText)) {
 	            final String text = slideText; // needs to be final for event handler.
-	            fadeOut.setOnFinished(e -> {
-	                lowerKey.setText(text);
+                if (" ".equals(lowerKey.getText())) {
+                    lowerKey.setText(text);
                     lowerKey.setFont(fxTextUtils.getOptimizedFont(text, lowerKey.getWrappingWidth()));
-	                fadeIn.play();
-	            });
-	            fadeOut.play();
+                    fadeIn.play();
+                } else {
+                    fadeOut.setOnFinished(e -> {
+                        lowerKey.setText(text);
+                        lowerKey.setFont(fxTextUtils.getOptimizedFont(text, lowerKey.getWrappingWidth()));
+                        fadeIn.play();
+                    });
+                    fadeOut.play();
+                }
             } else {
             	// Make sure initial text is displayed.
             	lowerKey.setText(slideText);
             }
             log.debug("Slide text parsed: {}", slideText);
         } else {
-            lowerKey.setText(" ");
+            fadeOut.setOnFinished(e -> {
+                lowerKey.setText(" ");
+            });
+            fadeOut.play();
         }
         midiModule.handleMessage(slideNotes);
         return true;
