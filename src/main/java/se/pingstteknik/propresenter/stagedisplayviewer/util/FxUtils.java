@@ -1,13 +1,5 @@
 package se.pingstteknik.propresenter.stagedisplayviewer.util;
 
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.FONT_FAMILY;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.MARGIN_BOTTOM;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.MAX_FONT_SIZE;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.OUTPUT_SCREEN;
-import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.OUTPUT_WIDTH_PERCENTAGE;
-
-import java.io.File;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -22,6 +14,10 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
+
+import java.io.File;
+
+import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.*;
 
 public class FxUtils {
     private static final Logger log = LoggerFactory.getLogger(FxUtils.class);
@@ -102,8 +98,14 @@ public class FxUtils {
         GridPane root = new GridPane();
         root.setHgap(10);
         root.setVgap(10);
-        root.setAlignment(Pos.BOTTOM_CENTER);
-        root.setPadding(new Insets(10, 10, MARGIN_BOTTOM.toInt(), 10));
+        if ("top".equalsIgnoreCase(VERTICAL_ALIGN.toString())) {
+            root.setAlignment(Pos.TOP_CENTER);
+        } else if ("center".equalsIgnoreCase(VERTICAL_ALIGN.toString())) {
+            root.setAlignment(Pos.CENTER);
+        } else {
+            root.setAlignment(Pos.BOTTOM_CENTER);
+        }
+        root.setPadding(new Insets(MARGIN_TOP.toInt(), 10, MARGIN_BOTTOM.toInt(), 10));
         root.add(lowerKey, 0, 0, 2, 1);
         return root;
     }

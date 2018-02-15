@@ -25,6 +25,7 @@ public enum Property {
     FONT_FAMILY("Droid serif"),
     MIN_FONT_SIZE("30"),
     MAX_FONT_SIZE("60"),
+    MARGIN_TOP("10"),
     MARGIN_BOTTOM("10"),
     RESPONSE_TIME_MILLIS("50"),
     OUTPUT_WIDTH_PERCENTAGE("90"),
@@ -35,7 +36,8 @@ public enum Property {
 	FADE_TIME("0"), // Length of fade transition in milliseconds.
 	CAPITALIZE_LINES("false"), // true if first word in every line should be capitalized.
 	TEXT_ALIGN("justify"), // Specifies the text alignment. Should be one of (Case insensitive): Center, Right, Left, or Justify.
-	HEIGHT("-1"), // Height of display
+    VERTICAL_ALIGN("bottom"), // Specifies the vertical text alignment. Should be one of (Case insensitive): Top, Center, Bottom.
+    HEIGHT("-1"), // Height of display
 	WIDTH("-1"); // Width of display (-1 if default)
 	
     private static final Logger log = LoggerFactory.getLogger(Property.class);
