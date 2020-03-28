@@ -20,6 +20,17 @@ MacOS/Linux/*nix
 
     ./run.sh
 
+## Adding lower key on video with shadows
+This can be achieved in OBS. Add stage display viewer window/screen as a source on top of video stream in OBS.
+Then add a Color key filter to the stage display source with settings.
+
+    Key Color Type: Custom
+    Key Color: #111111 (#ff111111)
+    Similarity: 1
+    
+This will give you an easy to read lower key with a discreet black shadow.
+The key color must be the same as specified in styles.css and should preferably be quite dark but not completely black to give the best effect.
+
 ## Transform text
 Text transform support: compactify rows by removing every second line break, i.e. 4 rows will be shown as 2 rows.
 Property specified in file config.properties
