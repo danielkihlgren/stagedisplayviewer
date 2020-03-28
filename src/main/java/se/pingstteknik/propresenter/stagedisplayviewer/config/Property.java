@@ -35,6 +35,7 @@ public enum Property {
     REMOVE_LINES_AFTER_EMPTY_LINE("false"),
 	FADE_TIME("0"), // Length of fade transition in milliseconds.
 	CAPITALIZE_LINES("false"), // true if first word in every line should be capitalized.
+    CAPITALIZE_TEXT("false"), // true if text should be capitalized.
 	TEXT_ALIGN("justify"), // Specifies the text alignment. Should be one of (Case insensitive): Center, Right, Left, or Justify.
     VERTICAL_ALIGN("bottom"), // Specifies the vertical text alignment. Should be one of (Case insensitive): Top, Center, Bottom.
     HEIGHT("-1"), // Height of display

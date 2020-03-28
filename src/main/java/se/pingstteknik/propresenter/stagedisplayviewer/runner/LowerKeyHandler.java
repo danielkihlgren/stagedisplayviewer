@@ -114,8 +114,10 @@ public class LowerKeyHandler implements Runnable {
             slideText = CustomNewLineTranslator.translate(slideText, slideNotes);
             slideText = TEXT_TRANSLATOR_ACTIVE.isTrue()
                     ? concatenateRowsTranslator.transformSceneText(slideText) : slideText;
-            slideText = Property.CAPITALIZE_LINES.isTrue() // capitalize lines if specified in config.
+            slideText = CAPITALIZE_LINES.isTrue() // capitalize lines if specified in config.
                     ? CapitalizeRowsTranslator.transform(slideText) : slideText;
+            slideText = CAPITALIZE_TEXT.isTrue() // capitalize text if specified in config.
+                    ? CapitalizeTextTranslator.transform(slideText) : slideText;
 
             // Play the fade out/in animation if the slide text changes.
             if(!lowerKey.getText().equals(slideText)) {

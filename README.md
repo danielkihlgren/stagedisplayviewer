@@ -22,9 +22,21 @@ MacOS/Linux/*nix
 
 ## Transform text
 Text transform support: compactify rows by removing every second line break, i.e. 4 rows will be shown as 2 rows.
-Active module in properies file config.properties
+Property specified in file config.properties
 
     TEXT_TRANSLATOR_ACTIVE = true
+
+## Capitalize lines
+Capitalizes the first letter in every line.
+Property specified in file config.properties
+
+    CAPITALIZE_LINES = false
+
+## Capitalize text
+Capitalizes the text
+Property specified in file config.properties
+
+    CAPITALIZE_TEXT = true
 
 ## Preserve two lines
 This setting will preserve two lines and not convert that into one line when text_translator_active is true
@@ -81,6 +93,9 @@ Where
 The 0 indicates the channel, 60 indicates the note Middle C and the 92 is an arbitrary key-down velocity value
 
 # [Releases](https://github.com/danielkihlgren/stagedisplayviewer/releases)
+
+v1.7.0
+Fix Issue #24: Add option to transform text to Uppercase
 
 [v1.6.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.6.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.6.0/StageDisplayViewer-v1.6.0.zip)
 Fixed Issues #15: Enhancements Request
