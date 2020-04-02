@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import se.pingstteknik.propresenter.stagedisplayviewer.config.Property;
 
 import java.io.File;
+import java.net.MalformedURLException;
 
 import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.*;
 
@@ -59,7 +60,11 @@ public class FxUtils {
         Rectangle2D bounds = getScreenBounds();
         Scene scene = new Scene(createRoot(lowerKey), bounds.getWidth(), bounds.getHeight());
         scene.getStylesheets().add("styles.css");
-        scene.getStylesheets().add("file:///" + new File("styles.css").getAbsolutePath().replace("\\", "/"));
+        try {
+            scene.getStylesheets().add(new File("styles.css").toURI().toURL().toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         return scene;
     }
 
