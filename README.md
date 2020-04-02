@@ -1,11 +1,21 @@
 Stage Display Viewer
 ==================
 
-Stage display viewer in java for propresenter.
+Stage display viewer in java for Propresenter 6 and 5.
 
 The output text is shown in a lower key fashion, i.e. it's shown in the lower part of the screen. It also compactifies rows by removing every second line break, i.e. 4 rows will be shown as 2 rows.
 
 It should work in Windows/MacOS/Linux and other *nix systems
+
+
+# Example usage
+Here is an example of how a slide in propresenter can be transformed into a lower key.
+Here the secondary language is removed and the text is placed at the bottom of the screen.
+A small shadow is added to make text easier to read. This is accomplished using stage display viewer and OBS.
+
+![Text shown in propresenter](images/propresenter.png)
+
+![Text as lower key](images/example.jpg)
 
 # Usage
 Propresenter must be running when running stage display viewer.
@@ -107,12 +117,13 @@ The 0 indicates the channel, 60 indicates the note Middle C and the 92 is an arb
 
 v1.7.0
 Fix Issue #24: Add option to transform text to Uppercase
+Fix Issue #25: Fix problem where styles.css not found when path contains whitespaces
 
 [v1.6.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.6.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.6.0/StageDisplayViewer-v1.6.0.zip)
-Fixed Issues #15: Enhancements Request
-Fixed Issues #17: Enhancements Request
-Fixed Issues #18: Fix fading issues when font size changes
-Fixed Issues #19: Add window mode support
+Fix Issue #15: Enhancements Request
+Fix Issue #17: Enhancements Request
+Fix Issue #18: Fix fading issues when font size changes
+Fix Issue #19: Add window mode support
 
 [v1.5.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.5.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.5.0/StageDisplayViewer.zip)
 Make it more resilience by adding auto-reconnect
@@ -134,5 +145,5 @@ Add midi module support. This makes it possible to send midi command from propre
 First release.
 
 # Known problems
+* [Propresenter 7 not supported](https://github.com/danielkihlgren/stagedisplayviewer/issues/28)
 * Propresenter 5 for Windows does not support UTF-8 correctly which makes international characters to be shown incorrectly, e.g. Swedish characters ÅÄÖ are shown as ???. This is fixed in propresenter 6.
-* [Starting on secondary screen is not correctly implemented](https://github.com/danielkihlgren/stagedisplayviewer/issues/1)
