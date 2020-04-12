@@ -4,7 +4,7 @@ import static se.pingstteknik.propresenter.stagedisplayviewer.config.Property.DI
 
 /**
  * @author Daniel Kihlgren
- * @version 1.2.1
+ * @version 1.7.0
  * @since 1.0.0
  */
 public class ConcatenateRowsTranslator {
@@ -25,8 +25,11 @@ public class ConcatenateRowsTranslator {
     }
 
     private String reconstructTextFromRows(String[] rows) {
+        System.out.println(rows.length);
         StringBuilder aggregatedText = new StringBuilder();
-        if (rows.length == 2 && preserveTwoLines) {
+        if (rows.length == 0) {
+            return "";
+        } else if (rows.length == 2 && preserveTwoLines) {
             aggregatedText.append(rows[0].trim());
             aggregatedText.append(NEWLINE);
         } else {

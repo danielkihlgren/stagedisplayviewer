@@ -118,6 +118,7 @@ The 0 indicates the channel, 60 indicates the note Middle C and the 92 is an arb
 v1.7.0
 Fix Issue #24: Add option to transform text to Uppercase
 Fix Issue #25: Fix problem where styles.css not found when path contains whitespaces
+Fix Issue #30: Fix problems with slides with only line breaks
 
 [v1.6.0](https://github.com/danielkihlgren/stagedisplayviewer/releases/tag/v1.6.0) [download](https://github.com/danielkihlgren/stagedisplayviewer/releases/download/v1.6.0/StageDisplayViewer-v1.6.0.zip)
 Fix Issue #15: Enhancements Request

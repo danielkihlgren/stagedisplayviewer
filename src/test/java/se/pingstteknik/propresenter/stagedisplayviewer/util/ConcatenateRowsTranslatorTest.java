@@ -38,4 +38,9 @@ public class ConcatenateRowsTranslatorTest {
         assertThat(translator.transformSceneText("  rad 1  \n  rad 2  \n  rad 3  \n  rad 4  "), is("rad 1 rad 2\nrad 3 rad 4"));
     }
 
+    @Test
+    public void emptyLineShouldReturnEmpty() throws Exception {
+        assertThat(translator.transformSceneText("\n"), is(""));
+    }
+
 }
