@@ -9,31 +9,31 @@
     <files>
         <file>
             <source>README.md</source>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory></outputDirectory>
         </file>
         <file>
             <source>LICENSE</source>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory></outputDirectory>
         </file>
         <file>
             <source>config.properties</source>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory></outputDirectory>
         </file>
         <file>
             <source>run.bat</source>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory></outputDirectory>
         </file>
         <file>
             <source>run.sh</source>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory></outputDirectory>
         </file>
         <file>
             <source>src/main/resource/styles.css</source>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory></outputDirectory>
         </file>
         <file>
             <source>${project.build.directory}/jfx/app/StageDisplayViewer-jfx.jar</source>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory></outputDirectory>
         </file>
     </files>
     <!--<fileSets>-->
