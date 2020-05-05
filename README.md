@@ -1,7 +1,7 @@
 Stage Display Viewer
 ==================
 
-Stage display viewer in java for Propresenter 6 and 5.
+Stage display viewer in java 8 for Propresenter 6 and 5.
 
 The output text is shown in a lower key fashion, i.e. it's shown in the lower part of the screen. It also compactifies rows by removing every second line break, i.e. 4 rows will be shown as 2 rows.
 
